@@ -6,6 +6,7 @@ class CustomCast(object):
 
     Example
     -------
+    >>> from collections.abc import Iterable
     >>> from pyautocast import autocast
     >>> mycast = CustomCast()
     >>> mycast.add_cast_rule(int, tuple, lambda x: (x, x))
@@ -16,16 +17,27 @@ class CustomCast(object):
     ...         return (int(obj[0]), int(obj[0]))
     ...     else:
     ...         return (int(obj[0]), int(obj[1]))
+    ...
+    >>> def iterable2tuple(obj: Iterable) -> tuple:
+    ...     if len(obj) == 0:
+    ...         raise ValueError
+    ...     elif len(obj) == 1:
+    ...         return (int(obj[0]), int(obj[0]))
+    ...     else:
+    ...         return (int(obj[0]), int(obj[0]))
+    ...
     >>> mycast.add_cast_rule(tuple, tuple, tuple2tuple)
+    >>> mycast.add_cast_rule(Iterable, tuple, iterable2tuple)
     >>> @mycast.autocast(x=tuple, y=tuple, z=tuple)
     ... def func(x, y, z):
-    ...     assert(isinstance(x, tuple))
-    ...     assert(len(x) == 2)
-    ...     assert(isinstance(y, tuple))
-    ...     assert(len(y) == 2)
-    ...     assert(isinstance(z, tuple))
-    ...     assert(len(z) == 2)
-    >>> func(3, (3.89,), ("2", "7", "-1"))
+    ...     print(x)
+    ...     print(y)
+    ...     print(z)
+    ...
+    >>> func(3, (3.89, "7"), ["9", -2.5])
+    (3, 3)
+    (3, 7)
+    (9, 9)
     """
 
     def __init__(self):

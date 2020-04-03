@@ -1,20 +1,21 @@
 import inspect
 import functools
-from typing import Any, Dict, Tuple
+from typing import OrderedDict, Tuple
 
 
 def _cast(
-        obj: Any,
+        obj: object,
         cast_to: type,
-        cast_rules: Dict[Tuple[type, type], callable]):
-    if (type(obj), cast_to) in cast_rules:
-        return cast_rules[(type(obj), cast_to)](obj)
+        cast_rules: OrderedDict[Tuple[type, type], callable]):
+    for (input_type, output_type), func in cast_rules.items():
+        if isinstance(obj, input_type):
+            return func(obj)
     else:
         return cast_to(obj)
 
 
 def _autocast(
-        cast_rules: Dict[Tuple[type, type], callable] = {},
+        cast_rules: OrderedDict[Tuple[type, type], callable] = {},
         **cast_to: type) -> callable:
 
     def wrapper(func: callable) -> callable:
