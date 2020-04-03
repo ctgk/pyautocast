@@ -22,6 +22,21 @@ git clone git+https://github.com/ctgk/pyautocast.git
 "arg 'x' in func() is [1, 2, 3]"
 ```
 
+```py
+>>> from pyautocast import CustomCast
+>>> mycast = CustomCast()
+>>> mycast.add_cast_rule(int, tuple, lambda x: (x, x))
+>>> @mycast.autocast(x=tuple)
+... def func(x):
+...     print(x)
+>>> func(2)
+(2, 2)
+>>> func(-4.5)
+Traceback (most recent call last):
+...
+TypeError: 'float' object is not iterable
+```
+
 ## Develop
 
 ```bash

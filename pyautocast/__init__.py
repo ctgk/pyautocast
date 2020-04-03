@@ -6,38 +6,18 @@ class CustomCast(object):
 
     Example
     -------
-    >>> from collections.abc import Iterable
-    >>> from pyautocast import autocast
+    >>> from pyautocast import CustomCast
     >>> mycast = CustomCast()
     >>> mycast.add_cast_rule(int, tuple, lambda x: (x, x))
-    >>> def tuple2tuple(obj: tuple) -> tuple:
-    ...     if len(obj) == 0:
-    ...         raise ValueError
-    ...     elif len(obj) == 1:
-    ...         return (int(obj[0]), int(obj[0]))
-    ...     else:
-    ...         return (int(obj[0]), int(obj[1]))
-    ...
-    >>> def iterable2tuple(obj: Iterable) -> tuple:
-    ...     if len(obj) == 0:
-    ...         raise ValueError
-    ...     elif len(obj) == 1:
-    ...         return (int(obj[0]), int(obj[0]))
-    ...     else:
-    ...         return (int(obj[0]), int(obj[0]))
-    ...
-    >>> mycast.add_cast_rule(tuple, tuple, tuple2tuple)
-    >>> mycast.add_cast_rule(Iterable, tuple, iterable2tuple)
-    >>> @mycast.autocast(x=tuple, y=tuple, z=tuple)
-    ... def func(x, y, z):
+    >>> @mycast.autocast(x=tuple)
+    ... def func(x):
     ...     print(x)
-    ...     print(y)
-    ...     print(z)
+    >>> func(2)
+    (2, 2)
+    >>> func(-4.5)
+    Traceback (most recent call last):
     ...
-    >>> func(3, (3.89, "7"), ["9", -2.5])
-    (3, 3)
-    (3, 7)
-    (9, 9)
+    TypeError: 'float' object is not iterable
     """
 
     def __init__(self):
