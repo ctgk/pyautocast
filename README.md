@@ -4,7 +4,7 @@ Python library to automatically cast function arguments using decorator.
 ## Install
 
 ```bash
-git clone git+https://github.com/ctgk/pyautocast.git
+pip install pyautocast
 ```
 
 ## Usage
@@ -35,13 +35,4 @@ git clone git+https://github.com/ctgk/pyautocast.git
 Traceback (most recent call last):
 ...
 TypeError: 'float' object is not iterable
-```
-
-## Develop
-
-```bash
-$ git clone https://github.com/ctgk/pyautocast.git
-$ cd pyautocast
-$ ./scripts/setup_hooks.sh
-$ pip install -e .[develop]
 ```
