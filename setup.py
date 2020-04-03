@@ -28,7 +28,7 @@ setup(
     url='https://github.com/ctgk/pyautocast',
     description='Automatic function arguments casting',
     long_description=readme,
-    long_description_content_type='text/readme',
+    long_description_content_type='text/markdown',
     license="MIT",
     classifiers=[
         'Programming Language :: Python :: 3.7',
